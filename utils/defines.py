@@ -11,3 +11,5 @@ SUB_DIR = os.path.join(PROJ_DIR, 'submissions')
 LABEL_FILE = os.path.join(DATA_DIR, 'train.csv')
 SAMPLE_SUB_FILE = os.path.join(DATA_DIR, 'sample_submission.csv')
 
+# Miscellanea
+N_CLASSES = 28
