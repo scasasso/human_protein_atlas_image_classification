@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+submissions/
+models/
+input/
+*.model
+.idea
