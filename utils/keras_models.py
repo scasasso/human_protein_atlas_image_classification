@@ -5,7 +5,6 @@ from keras import metrics
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras import backend as K
-import keras
 
 
 def baseline1(input_shape, dropout=0.25):
