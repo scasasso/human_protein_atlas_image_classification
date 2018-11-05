@@ -1,13 +1,13 @@
 import numpy as np
 import cv2
-import keras
+from keras.utils import Sequence
 from imgaug import augmenters as iaa
 from PIL import Image
 
 from utils.image import load_image
 
-class ProteinDataGenerator(keras.utils.Sequence):
 
+class ProteinDataGenerator(Sequence):
     def __init__(self, paths, labels, batch_size, shape, shuffle=False, use_cache=False, augment=False):
         self.paths, self.labels = paths, labels
         self.batch_size = batch_size
@@ -32,13 +32,13 @@ class ProteinDataGenerator(keras.utils.Sequence):
         if self.use_cache:
             X = self.cache[indexes]
             for i, path in enumerate(paths[np.where(self.is_cached[indexes] == 0)]):
-                image = self.__load_image(path)
+                image = self._load_image(path)
                 self.is_cached[indexes[i]] = 1
                 self.cache[indexes[i]] = image
                 X[i] = image
         else:
             for i, path in enumerate(paths):
-                X[i] = self.__load_image(path)
+                X[i] = self._load_image(path)
 
         y = self.labels[indexes]
 
@@ -90,9 +90,8 @@ class ProteinDataGenerator(keras.utils.Sequence):
         for item in (self[i] for i in range(len(self))):
             yield item
 
-    @staticmethod
-    def __load_image(path, shape):
+    def _load_image(self, path):
         im = load_image(path)
-        im = cv2.resize(im, shape)
+        im = cv2.resize(im, (self.shape[0], self.shape[1]))
         im = np.divide(im, 255)
         return im
